@@ -1,16 +1,23 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import Header from "./Components/Header/Header";
+import { Switch, Route, Redirect } from "react-router-dom";
+import HomePage from "./Components/HomePage/HomePage";
+import SearchBar from "./Components/SearchBar/SearchBar";
+import MovieDetailsPage from "./Components/MovieDetailsPage/MovieDetailsPage";
+// import Cast from "./Components/Cast/Cast";
+// import Reviews from "./Components/Review/Review";
 
 export default class App extends Component {
-  static propTypes = {
-    // prop: PropTypes
-  }
-
   render() {
     return (
-      <div>
-        <p>тут будет домашка</p>
-      </div>
-    )
+      <>
+        <Header />
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/movies" exact component={SearchBar} />
+          <Route path="/movies/:movieId" component={MovieDetailsPage} />
+        </Switch>
+      </>
+    );
   }
 }
