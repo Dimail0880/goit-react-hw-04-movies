@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getTrending } from "../helpers/getAPI";
 import { Link } from "react-router-dom";
+// import MoviesList from '../MoviesList/MoviesList'
 
 export default class HomePage extends Component {
   state = {
@@ -19,6 +20,7 @@ export default class HomePage extends Component {
 
   render() {
     const { moviesList } = this.state;
+    console.log(moviesList)
     return (
       <>
         <h2>Trending now </h2>
@@ -28,7 +30,8 @@ export default class HomePage extends Component {
               <Link
                 to={{
                   pathname: `/movies/${el.id}`,
-                  // state: { from: this.props.location },
+                  state: { from: this.props.location },
+
                 }}
               >
                 {el.original_title ? el.original_title : el.name}

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const MoviesList = ({ queryList }) => {
-  console.log(queryList);
   return (
     <ul>
       {queryList.map((item) => (
@@ -10,7 +9,7 @@ const MoviesList = ({ queryList }) => {
           <Link
             to={{
               pathname: `/movies/${item.id}`,
-              // state: { from: location },
+              // state: {  from: this.props.location },
             }}
           >
             {item.original_title}

@@ -31,13 +31,13 @@ export default class SearchBar extends Component {
       ...this.props.location.pathname,
       search: `query=${this.state.value}`,
     });
+    this.setState({ value: '' });
   };
 
   getMoviesList = (data) => {
     getMovieByQuery(data).then((res) =>
       this.setState({ queryList: res.data.results })
     );
-    console.log(this.state.queryList);
   };
 
   render() {

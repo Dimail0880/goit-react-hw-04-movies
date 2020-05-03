@@ -1,51 +1,55 @@
 import React, { Component } from "react";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { getMovieDetails } from "../helpers/getAPI";
 import Cast from "../Cast/Cast";
 import Reviews from "../Review/Review";
 import shortId from "shortid";
 
-const getIdFromProps = (props) => props.match.params.movieId;
-
 export default class MovieDetailsPage extends Component {
-  state = { data: {} };
+  state = { data: {},
+prevLocation: {} };
+
   componentDidMount() {
-    const id = getIdFromProps(this.props);
-    getMovieDetails(id).then((res) => this.setState({ data: res.data }));
+    const movieId = this.props.match.params.movieId;
+    getMovieDetails(movieId).then((res) => this.setState({ data: res.data }));
+    // this.setState({prevLocation: this.props.history })
   }
   goBack = () => {
-    const { history } = this.props;
-    history.goBack();
+    const { history, location } = this.props;
+		// if (location.state) {
+		// 	return history.push(location.state.from);
+		// }
+		history.push("/");
   };
   render() {
-    const props = this.state.data;
+        // console.log(this.state.location.state) 
+
+    const { data } = this.state;
     return (
       <>
         <button onClick={this.goBack}> Go back</button>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${props.backdrop_path}`}
-          alt={props.original_title}
+          src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
+          alt={data.original_title}
         />
         <h3>
-          {props.original_title} ({props.release_date})
+          {data.original_title} ({data.release_date})
         </h3>
-        <p>User Score: {props.vote_average * 10}%</p>
+        <p>User Score: {data.vote_average * 10}%</p>
         <h4>Overview</h4>
-        <p>{props.overview}</p>
+        <p>{data.overview}</p>
         <h4>Genres</h4>
         <ul>
-          {props.genres &&
-            props.genres.length > 0 &&
-            props.genres.map((i) => <li key={shortId.generate()}>{i.name}</li>)}
+          {data.genres &&
+            data.genres.length > 0 &&
+            data.genres.map((el) => <li key={shortId.generate()}>{el.name}</li>)}
         </ul>
         <h5>Additional information</h5>
-        <Link to={`/movies/${props.id}/cast`}>Cast</Link>
-        <Link to={`/movies/${props.id}/reviews`}>Reviews</Link>
+        <Link to={`/movies/${data.id}/cast`}>Cast</Link>
+        <Link to={`/movies/${data.id}/reviews`}>Reviews</Link>
 
-        <Switch>
-          <Route path="/movies/:movieId/cast" component={Cast} />
-          <Route path="/movies/:movieId/reviews" component={Reviews} />
-        </Switch>
+        <Route path="/movies/:movieId/cast" component={Cast} />
+        <Route path="/movies/:movieId/reviews" component={Reviews} />
       </>
     );
   }
