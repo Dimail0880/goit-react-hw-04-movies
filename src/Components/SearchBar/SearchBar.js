@@ -36,7 +36,7 @@ export default class SearchBar extends Component {
 
   getMoviesList = (data) => {
     getMovieByQuery(data).then((res) =>
-      this.setState({ queryList: res.data.results })
+      this.setState({ queryList: res })
     );
   };
 

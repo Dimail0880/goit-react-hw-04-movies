@@ -11,7 +11,7 @@ export default class Cast extends Component {
     }
     componentDidMount(){
         const movieID = this.props.match.params.movieId
-        castRequest(movieID).then(res => this.setState({actors: res.data.cast }))
+        castRequest(movieID).then(res => this.setState({actors: res }))
        }
 
     render() {

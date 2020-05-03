@@ -6,34 +6,39 @@ import Reviews from "../Review/Review";
 import shortId from "shortid";
 
 export default class MovieDetailsPage extends Component {
-  state = { data: {},
-prevLocation: {} };
+  state = { data: {}, prevLocation: {} };
 
+ 
   componentDidMount() {
-    const movieId = this.props.match.params.movieId;
-    getMovieDetails(movieId).then((res) => this.setState({ data: res.data }));
-    // this.setState({prevLocation: this.props.history })
+    const { params } = this.props.match;
+    // loading true
+    getMovieDetails(params.movieId)
+      .then((res) => this.setState({ data: res }))
+      // .then(res => console.log(res))
+    //  + catch
+    //  finally loader false
   }
+
   goBack = () => {
     const { history, location } = this.props;
-		// if (location.state) {
-		// 	return history.push(location.state.from);
-		// }
-		history.push("/");
+    // if (location.state) {
+    // 	return history.push(location.state.from);
+    // }
+    history.push("/");
   };
   render() {
-        // console.log(this.state.location.state) 
+    // console.log(this.state.location.state)
 
     const { data } = this.state;
     return (
       <>
         <button onClick={this.goBack}> Go back</button>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
-          alt={data.original_title}
+          src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+          alt={data.title}
         />
         <h3>
-          {data.original_title} ({data.release_date})
+          {data.title} ({data.release_date})
         </h3>
         <p>User Score: {data.vote_average * 10}%</p>
         <h4>Overview</h4>
@@ -42,7 +47,9 @@ prevLocation: {} };
         <ul>
           {data.genres &&
             data.genres.length > 0 &&
-            data.genres.map((el) => <li key={shortId.generate()}>{el.name}</li>)}
+            data.genres.map((el) => (
+              <li key={shortId.generate()}>{el.name}</li>
+            ))}
         </ul>
         <h5>Additional information</h5>
         <Link to={`/movies/${data.id}/cast`}>Cast</Link>

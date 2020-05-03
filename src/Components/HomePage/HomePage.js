@@ -9,18 +9,12 @@ export default class HomePage extends Component {
   };
 
   componentDidMount() {
-    getTrending()
-      .then((res) => {
-        this.setState({
-          moviesList: res.data.results,
-        });
-      })
-      .catch((error) => console.log("Home page", error));
-  }
+    getTrending().then(res => this.setState({moviesList: res }))};
+
 
   render() {
     const { moviesList } = this.state;
-    console.log(moviesList)
+    console.log(moviesList);
     return (
       <>
         <h2>Trending now </h2>
@@ -31,7 +25,6 @@ export default class HomePage extends Component {
                 to={{
                   pathname: `/movies/${el.id}`,
                   state: { from: this.props.location },
-
                 }}
               >
                 {el.original_title ? el.original_title : el.name}

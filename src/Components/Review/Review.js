@@ -14,7 +14,7 @@ export default class Review extends Component {
 
         componentDidMount() {
             const movieID = this.props.match.params.movieId
-            reviewRequest(movieID).then(res => this.setState({reviewList: res.data.results }))
+            reviewRequest(movieID).then(res => this.setState({reviewList: res }))
            }
     
     
