@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { castRequest } from "../../helpers/getAPI";
 import CastActorItem from "./CastActorItem";
 import Loader from "react-loader-spinner";
+import style from "./Cast.module.css";
 
 export default class Cast extends Component {
   state = {
@@ -22,7 +23,7 @@ export default class Cast extends Component {
         {isLoading ? (
           <Loader />
         ) : (
-          <ul>
+          <ul className={style.container}>
             {actors.map(({ profile_path, name, character, id }) => (
               <CastActorItem
                 key={id}

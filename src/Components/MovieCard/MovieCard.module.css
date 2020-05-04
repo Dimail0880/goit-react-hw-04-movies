@@ -1,0 +1,36 @@
+.btn {
+  display: block;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 5px;
+  background-color: rgb(224, 157, 157);
+  width: 80px;
+  height: 30px;
+  margin-bottom: 20px;
+  font-style: oblique;
+  color: honeydew;
+  cursor: pointer;
+}
+.btn:hover {
+  transform: scale(1.15);
+  background-color: rgb(255, 78, 80);
+  color: white;
+  border-color: rgb(255, 255, 255);
+  transition: all 200ms linear;
+  cursor: pointer;
+}
+.link {
+  display: inline-block;
+  width: 60px;
+  height: 35px;
+}
+.poster {
+  display: inline-block;
+  max-width: 300px;
+}
+.container {
+  display: flex;
+  align-items: flex-start;
+}
+.details {
+  padding: 10px;
+}

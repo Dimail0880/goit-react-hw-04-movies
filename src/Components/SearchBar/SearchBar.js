@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getMovieByQuery } from "../../helpers/getAPI";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
+import style from './SearchBar.module.css'
 
 export default class SearchBar extends Component {
   state = {
@@ -46,15 +47,15 @@ export default class SearchBar extends Component {
     const { value, movies } = this.state;
     return (
       <>
-        <form onSubmit={this.handelSubmit}>
-          <input
+        <form className={style.form}onSubmit={this.handelSubmit}>
+          <input className={style.input}
             type="text"
             value={value}
             name="value"
             placeholder="Enter search"
             onChange={this.handleChange}
           />
-          <button type="submit">Search..</button>
+          <button className={style.button} type="submit">Search..</button>
         </form>
         <ul>
           {movies.map((el) => (

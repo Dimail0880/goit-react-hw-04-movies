@@ -1,0 +1,17 @@
+.cardItem{
+    display: block;
+    border: 1px solid gray;
+    height: 250px;
+    width: 250px;
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+.cardItem:hover{
+   
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+}

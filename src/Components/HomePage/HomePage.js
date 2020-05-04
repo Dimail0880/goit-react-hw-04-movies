@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { getTrending } from "../../helpers/getAPI";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
-// import MoviesList from '../MoviesList/MoviesList'
 
 export default class HomePage extends Component {
   state = {
