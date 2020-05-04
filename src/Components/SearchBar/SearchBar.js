@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { getMovieByQuery } from "../helpers/getAPI";
-import MoviesList from "../MoviesList/MoviesList";
+import { getMovieByQuery } from "../../helpers/getAPI";
 import queryString from "query-string";
+import { Link } from "react-router-dom";
 
 export default class SearchBar extends Component {
   state = {
-    queryList: [],
+    movies: [],
     value: "",
+    from: "",
   };
   componentDidMount() {
     const query = queryString.parse(this.props.location.search).query;
@@ -24,24 +25,25 @@ export default class SearchBar extends Component {
 
   handelSubmit = (e) => {
     e.preventDefault();
-
+    if (!this.state.value) {
+      return;
+    }
     this.getMoviesList(this.state.value);
 
-    this.props.history.push({
-      ...this.props.location.pathname,
+    this.props.history.replace({
+      pathname: this.props.location.pathname,
       search: `query=${this.state.value}`,
     });
-    this.setState({ value: '' });
+    this.setState({ from: this.state.value });
+    this.setState({ value: "" });
   };
 
   getMoviesList = (data) => {
-    getMovieByQuery(data).then((res) =>
-      this.setState({ queryList: res })
-    );
+    getMovieByQuery(data).then((res) => this.setState({ movies: res }));
   };
 
   render() {
-    const { value, queryList } = this.state;
+    const { value, movies } = this.state;
     return (
       <>
         <form onSubmit={this.handelSubmit}>
@@ -54,7 +56,20 @@ export default class SearchBar extends Component {
           />
           <button type="submit">Search..</button>
         </form>
-        {queryList.length > 0 && <MoviesList queryList={queryList} />}
+        <ul>
+          {movies.map((el) => (
+            <li key={el.id}>
+              <Link
+                to={{
+                  pathname: `/movies/${el.id}`,
+                  state: { from: this.props.location },
+                }}
+              >
+                {el.original_title ? el.original_title : el.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </>
     );
   }

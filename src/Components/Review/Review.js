@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {reviewRequest} from '../helpers/getAPI'
+import {reviewRequest} from '../../helpers/getAPI'
 import shortId from "shortid";
 import ReviewItem from './ReviewItem'
 

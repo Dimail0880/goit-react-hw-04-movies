@@ -1,37 +1,45 @@
 import React, { Component } from "react";
-import { getTrending } from "../helpers/getAPI";
+import { getTrending } from "../../helpers/getAPI";
 import { Link } from "react-router-dom";
+import Loader from "react-loader-spinner";
 // import MoviesList from '../MoviesList/MoviesList'
 
 export default class HomePage extends Component {
   state = {
     moviesList: [],
+    isLoading: true,
   };
 
   componentDidMount() {
-    getTrending().then(res => this.setState({moviesList: res }))};
-
+    getTrending()
+      .then((res) => this.setState({ moviesList: res }))
+      .finally(this.setState({ isLoading: false }));
+  }
 
   render() {
-    const { moviesList } = this.state;
-    console.log(moviesList);
+    const { moviesList, isLoading } = this.state;
     return (
       <>
         <h2>Trending now </h2>
-        <ul>
-          {moviesList.map((el) => (
-            <li key={el.id}>
-              <Link
-                to={{
-                  pathname: `/movies/${el.id}`,
-                  state: { from: this.props.location },
-                }}
-              >
-                {el.original_title ? el.original_title : el.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <ul>
+            {moviesList.map((el) => (
+              <li key={el.id}>
+                <Link
+                  to={{
+                    pathname: `/movies/${el.id}`,
+                    state: { from: this.props.location },
+                  }}
+                >
+                  {el.original_title ? el.original_title : el.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </>
     );
   }
