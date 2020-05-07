@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import { Route, BrowserRouter } from "react-router-dom";
 import { getMovieDetails } from "../../helpers/getAPI";
-import Cast from "../Cast/Cast";
-import Reviews from "../Review/Review";
+import Cast from "../../Components/Cast/Cast";
+import Reviews from "../../Components/Review/Review";
 import Loader from "react-loader-spinner";
-import MovieCard from "../MovieCard/MovieCard";
+import MovieCard from "../../Components/MovieCard/MovieCard";
+import { routes } from "../../helpers/route";
 
 export default class MovieDetailsPage extends Component {
-  state = { data: {}, from: {}, isLoading: true };
+  state = { movie: {}, from: {}, isLoading: true };
 
   componentDidMount() {
     const { params } = this.props.match;
 
     getMovieDetails(params.movieId)
-      .then((res) => this.setState({ data: res }))
+      .then((res) => this.setState({ movie: res }))
       .finally(this.setState({ isLoading: false }));
   }
 
@@ -23,11 +24,11 @@ export default class MovieDetailsPage extends Component {
       this.props.history.push(state.from);
       return;
     }
-    this.props.history.push("/");
+    this.props.history.push(`${routes.HOME}`);
   };
-  
+
   render() {
-    const { data, isLoading, from } = this.state;
+    const { movie, isLoading, from } = this.state;
 
     return (
       <>
@@ -36,9 +37,15 @@ export default class MovieDetailsPage extends Component {
         ) : (
           <>
             <BrowserRouter>
-              <MovieCard data={data} goBack={this.goBack} from={from} />
-              <Route path="/movies/:movieId/cast" component={Cast} />
-              <Route path="/movies/:movieId/reviews" component={Reviews} />
+              <MovieCard movie={movie} goBack={this.goBack} from={from} />
+              <Route
+                path={`${routes.MOVIE_DETAILS}${routes.MOVIE_CAST}`}
+                component={Cast}
+              />
+              <Route
+                path={`${routes.MOVIE_DETAILS}${routes.MOVIE_REVIEWS}`}
+                component={Reviews}
+              />
             </BrowserRouter>
           </>
         )}

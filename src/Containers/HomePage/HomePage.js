@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getTrending } from "../../helpers/getAPI";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
+import { routes } from "../../helpers/route";
 
 export default class HomePage extends Component {
   state = {
@@ -29,7 +30,7 @@ export default class HomePage extends Component {
               <li key={el.id}>
                 <Link
                   to={{
-                    pathname: `/movies/${el.id}`,
+                    pathname: `${routes.MOVIES}/${el.id}`,
                     state: { from: this.props.location },
                   }}
                 >

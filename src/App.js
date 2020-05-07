@@ -2,11 +2,12 @@ import React, { Component, Suspense, lazy } from "react";
 import Header from "./Components/Header/Header";
 import { Switch, Route } from "react-router-dom";
 import Loader from "react-loader-spinner";
+import { routes } from "./helpers/route";
 
-const HomePage = lazy(() => import("./Components/HomePage/HomePage"));
+const HomePage = lazy(() => import("./Containers/HomePage/HomePage"));
 const SearchBar = lazy(() => import("./Components/SearchBar/SearchBar"));
 const MovieDetailsPage = lazy(() =>
-  import("./Components/MovieDetailsPage/MovieDetailsPage")
+  import("./Containers/MovieDetailsPage/MovieDetailsPage")
 );
 
 export default class App extends Component {
@@ -16,9 +17,9 @@ export default class App extends Component {
         <Header />
         <Suspense fallback={<Loader />}>
           <Switch>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/movies" exact component={SearchBar} />
-            <Route path="/movies/:movieId" component={MovieDetailsPage} />
+            <Route path={routes.HOME} exact component={HomePage} />
+            <Route path={routes.MOVIES} exact component={SearchBar} />
+            <Route path={routes.MOVIE_DETAILS} component={MovieDetailsPage} />
           </Switch>
         </Suspense>
       </>

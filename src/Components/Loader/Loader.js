@@ -2,10 +2,9 @@ import React from "react";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-export default class LoaderApp extends React.Component {
-  state = {};
-  render() {
-    return (
+const LoaderApp = () => {
+  return (
+    <>
       <Loader
         margin="auto"
         type="Puff"
@@ -14,6 +13,8 @@ export default class LoaderApp extends React.Component {
         width={100}
         timeout={3000} //3 secs
       />
-    );
-  }
-}
+    </>
+  );
+};
+
+export default LoaderApp;
